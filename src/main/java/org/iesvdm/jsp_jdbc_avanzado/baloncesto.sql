@@ -37,6 +37,23 @@ CREATE TABLE IF NOT EXISTS `socio` (
   PRIMARY KEY (`socioID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+CREATE TABLE IF NOT EXISTS `socio` (
+                                       `socioID` int(11) NOT NULL,
+                                       `nombre` varchar(40) COLLATE utf8_spanish2_ci DEFAULT NULL,
+                                       `estatura` int(11) DEFAULT NULL,
+                                       `edad` int(11) DEFAULT NULL,
+                                       `localidad` varchar(30) COLLATE utf8_spanish2_ci DEFAULT NULL,
+                                       PRIMARY KEY (`socioID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+CREATE TABLE IF NOT EXISTS `entrenamiento` (
+    `idEntrenamiento` int(11) AUTO_INCREMENT PRIMARY KEY,
+    `tipoEntrenamiento` ENUM('fisico', 'tecnico'),
+    `ubicacion` VARCHAR(255) NOT NULL,
+    `fecha` DATE NOT NULL,
+    `socioID` INT DEFAULT NULL,
+    FOREIGN KEY (`socioID`) REFERENCES `socio`(`socioID`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 --
 -- Volcado de datos para la tabla `socio`
 --
