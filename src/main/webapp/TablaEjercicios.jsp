@@ -15,7 +15,7 @@
     <h2>Crear Un Entrenamiento</h2>
     <form action="crearTablaEjercicios.jsp" method="post">
         <label>Tipo de Entrenamiento</label>
-        <select>
+        <select name="tipoEntrenamiento">
             <option>fisico</option>
             <option>tecnico</option>
         </select>

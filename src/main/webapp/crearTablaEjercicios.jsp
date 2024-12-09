@@ -16,41 +16,67 @@
     String tipoEntrenamiento = null;
     String ubicacion = null;
     Date fecha = null;
+    int idSocio = -1;
     boolean valida = true;
+    String mensajeError ="";
 
     try{
+        tipoEntrenamiento = request.getParameter("tipoEntrenamiento");
+        ubicacion = request.getParameter("ubicacion");
+        fecha = Date.valueOf(request.getParameter("fecha"));
+        idSocio = Integer.parseInt(request.getParameter("idSocio"));
 
+        if (tipoEntrenamiento == null) {
+            valida = false;
+            mensajeError = "El tipo de entrenamiento es obligatorio.";
+        }
+        if (ubicacion == null || ubicacion.isEmpty()) {
+            valida = false;
+            mensajeError = "La ubicación es obligatoria.";
+        }
+        if (fecha == null) {
+            valida = false;
+            mensajeError = "La fecha es obligatoria.";
+        }
+
+    } catch (Exception ex) {
+        valida = false;
+        mensajeError = "Error en los datos ingresados. Verifica los valores.";
     }
 
-    //Conexion con la BBDD
-    Class.forName("com.mysql.cj.jdbc.Driver");
-    Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3307/baloncesto", "root", "secret");
-
-    if(valida){
+    if (valida) {
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
+        try{
+            //Conexion con la BBDD
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/baloncesto", "root", "secret");
 
-       String sql = "INSERT INTO entrenamiento VALUES ( " +
-                "?, " + //tipo entrenamiento
-                "?, " + // ubicacion
-                "?, " + //fecha
-                "?)"; //socioID
-        ;
+            String sql = "INSERT INTO entrenamiento (tipoEntrenamiento, ubicacion, fecha, socioID) VALUES (?, ?, ?, ?)";
+            ps = conn.prepareStatement(sql);
 
-        ps = conn.prepareStatement(sql);
+            // Configuramos los parámetros de la consulta
+            ps.setString(1, tipoEntrenamiento);
+            ps.setString(2, ubicacion);
+            ps.setDate(3, fecha);
+            ps.setInt(4, idSocio);
 
-        int idx = 1;
-        ps.setInt(idx++, numero);
-        ps.setString(idx++, nombre);
-        ps.setInt(idx++, estatura);
-        ps.setInt(idx++, edad);
-        ps.setString(idx++, localidad);
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas > 0) {
+                out.println("<p>Entrenamiento registrado con éxito.</p>");
+            } else {
+                out.println("<p>No se pudo registrar el entrenamiento.</p>");
+            }
 
-        int filasAfectadas = ps.executeUpdate();
-        System.out.println("SOCIOS GRABADOS:  " + filasAfectadas);
-    }
-
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally{
+            if (ps != null) ps.close();
+            if (conn != null) conn.close();
+        }
+    }else{
+        out.println("<p style='color:red;'>" + mensajeError + "</p>");
+    };
 %>
 </body>
 </html>
