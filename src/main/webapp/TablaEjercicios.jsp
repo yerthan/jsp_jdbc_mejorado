@@ -31,13 +31,6 @@
         <button type="submit" value="crear">Crear</button>
     </form>
 </div>
-<div>
-    <h2>Mostrar Entrenamientos generales o de un usuario</h2>
-    <form action="mostrarEntrenamientos.jsp" method="get">
-        <label>Dime el usuario que quieres IdSocio, si pones "TODOS" se mostraran todos</label>
-        <input type="text" name="opciones">
-        <button type="submit" value="buscarUsuario">Buscar</button>
-    </form>
-</div>
+
 </body>
 </html>

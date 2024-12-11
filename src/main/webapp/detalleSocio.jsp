@@ -51,7 +51,7 @@
             //
             String sql = "SELECT * FROM socio WHERE socioID = ?"; //socioID
 
-            ps = conn.prepareStatement(sql);
+            //ps = conn.prepareStatement(sql);
             //int idx = 1;
             //ps.setInt(idx++, socioID);
             ps.setInt(1, socioID);
