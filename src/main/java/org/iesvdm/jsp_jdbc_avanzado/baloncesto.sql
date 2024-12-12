@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `entrenamiento` (
     `ubicacion` VARCHAR(255) NOT NULL,
     `fecha` DATE NOT NULL,
     `socioID` INT DEFAULT NULL,
-    FOREIGN KEY (`socioID`) REFERENCES `socio`(`socioID`) ON DELETE SET NULL
+    FOREIGN KEY (`socioID`) REFERENCES `socio`(`socioID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 --
 -- Volcado de datos para la tabla `socio`
