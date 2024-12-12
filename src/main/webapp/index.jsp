@@ -30,7 +30,7 @@
 
 <form action="detalleSocio.jsp">
     Cargar socio con ID:
-    <input type="text" name="socioID">
+    <input type="text" name="socioIDBuscar">
     <input type="submit" value="Enviar">
 </form>
 </body>

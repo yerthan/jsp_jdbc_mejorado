@@ -14,7 +14,7 @@
     boolean valida = true;
     int socioID = -1;
     try {
-               socioID = Integer.parseInt(request.getParameter("socioID"));
+               socioID = Integer.parseInt(request.getParameter("socioIDBuscar"));
     } catch (Exception ex) {
         ex.printStackTrace();
         valida = false;
@@ -26,7 +26,7 @@
         //CARGA DEL DRIVER Y PREPARACIÓN DE LA CONEXIÓN CON LA BBDD
         //						v---------UTILIZAMOS LA VERSIÓN MODERNA DE LLAMADA AL DRIVER, no deprecado
         Class.forName("com.mysql.cj.jdbc.Driver");
-
+        Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3307/baloncesto","root", "secret");
         Connection conn = null;
         PreparedStatement ps = null;
      	ResultSet rs = null;
@@ -36,8 +36,7 @@
             //CARGA DEL DRIVER Y PREPARACIÓN DE LA CONEXIÓN CON LA BBDD
             //						v---------UTILIZAMOS LA VERSIÓN MODERNA DE LLAMADA AL DRIVER, no deprecado
             Class.forName("com.mysql.cj.jdbc.Driver");
-
-
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/baloncesto", "root", "secret");
 //>>>>>>NO UTILIZAR STATEMENT EN QUERIES PARAMETRIZADAS
 //       Statement s = conexion.createStatement();
 //       String insercion = "INSERT INTO socio VALUES (" + Integer.valueOf(request.getParameter("numero"))
@@ -51,9 +50,10 @@
             //
             String sql = "SELECT * FROM socio WHERE socioID = ?"; //socioID
 
-            //ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);
             //int idx = 1;
             //ps.setInt(idx++, socioID);
+
             ps.setInt(1, socioID);
 
 
